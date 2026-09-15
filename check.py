@@ -89,7 +89,7 @@ def main() -> int:
     if PENDING in status.lower():
         return 0
 
-    title = f"Bilhetes {MATCH} — status mudou"
+    title = f"Bilhetes {MATCH} - status mudou"
     body = f"{status}\n\n{URL}"
     push_ntfy(title, body)
     send_mail(title, body)
