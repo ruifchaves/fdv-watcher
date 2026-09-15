@@ -13,6 +13,6 @@ jobs:
 
       - name: Check ticket status
         env:
-          FDV_MATCH: Noruega
+          FDV_MATCH: País de Gales
           NTFY_TOPIC: ${{ secrets.NTFY_TOPIC }}
         run: python3 check.py
