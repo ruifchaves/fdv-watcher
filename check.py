@@ -56,7 +56,11 @@ def push_ntfy(title: str, body: str) -> None:
     req = urllib.request.Request(
         f"https://ntfy.sh/{topic}",
         data=body.encode("utf-8"),
-        headers={"Title": title, "Priority": "urgent", "Tags": "soccer"},
+        headers={
+            "Title": title.encode("utf-8").decode("latin-1"),
+            "Priority": "urgent",
+            "Tags": "soccer",
+        },
         method="POST",
     )
     urllib.request.urlopen(req, timeout=30).read()
