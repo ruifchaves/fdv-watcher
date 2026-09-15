@@ -84,6 +84,8 @@ def send_mail(title: str, body: str) -> None:
 def main() -> int:
     try:
         status = current_status()
+    except LookupError as exc:
+        status = f"página mudou de formato ({exc})"
     except Exception as exc:
         print(f"::warning::check failed: {exc}")
         return 1
