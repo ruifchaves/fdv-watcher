@@ -2,17 +2,28 @@ name: watch-tickets
 
 on:
   schedule:
-    - cron: "*/10 * * * *"   # every 10 minutes, UTC
-  workflow_dispatch:          # lets you run it by hand from the Actions tab
+    - cron: "0 */4 * * *"
+  workflow_dispatch:
 
 jobs:
   check:
     runs-on: ubuntu-latest
+    timeout-minutes: 350
+    concurrency:
+      group: watch-tickets
+      cancel-in-progress: true
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
-      - name: Check ticket status
+      - name: Watch ticket status
         env:
           FDV_MATCH: Noruega
           NTFY_TOPIC: ${{ secrets.NTFY_TOPIC }}
-        run: python3 check.py
+        run: |
+          deadline=$(( SECONDS + 20400 ))   # 5h40m
+          while [ $SECONDS -lt $deadline ]; do
+            rc=0
+            python3 check.py || rc=$?
+            [ "$rc" -eq 2 ] && exit 0
+            sleep 180
+          done
