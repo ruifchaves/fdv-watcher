@@ -100,7 +100,7 @@ def main() -> int:
     push_ntfy(title, body)
     send_mail(title, body)
     print("::notice::alert sent")
-    return 0
+    return 2
 
 
 if __name__ == "__main__":
